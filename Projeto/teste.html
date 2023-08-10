@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Monte Seu Sofá</title>
+	<style>
+	#botoes {
+	background: #FFF;
+	position: absolute;
+	z-index: 10;
+	left: -3px;
+	top: -58px;
+	}	
+	#botoes button {
+		margin-right: 5px;
+	}
+	.rotated {
+		transform: rotate(90deg);
+	}
+	#container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		border: 1px solid black;
+	}
+	#imagem {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	#modal {
+		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 400px;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		padding: 20px;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+	}
+	#modal h2 {
+		margin-top: 0;
+	}
+	#modal label {
+		display: block;
+		margin-bottom: 10px;
+	}
+	#modal input {
+		width: 100%;
+		padding: 5px;
+		margin-bottom: 50px;
+		box-sizing: border-box;
+	}
+	#modal button[type="submit"],
+	#modal button[type="button"] {
+		display: block;
+		margin: 10px 0 0 auto;
+	}
+	.rotated {
+        transform: rotate(90deg);
+    }
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Monte Seu Sofá</h1>
+	</header>
+	<section>
+		<article>
+			<div id="container">
+				<img id="imagem" src="quadrado.png" draggable="true" width="90" height="87">
+				<div id="botoes">
+					<img id="botao_esq" src="quadrado.png" width="30" height="31" title="Clique para voltar">
+					<img id="editar" src="quadrado.png" width="30" height="31" title="Clique para voltar">
+					<img id="botao_dir" src="quadrado.png" width="30" height="31" title="Clique para voltar">
+				</div> 
+		  </div>  
+	  </article>
+	</section>
+	<footer>
+		<p>Copyright © Firepray - 2023</p>
+  </footer>
+  7
+  <div id="modal">
+    <h2>Definir tamanho da imagem</h2>
+<form>
+    <label for="largura">Largura:</label>
+    <input type="number" id="largura" name="largura" min="0" max="1000">
+
+    <label for="altura">Altura:</label>
+    <input type="number" id="altura" name="altura" min="0" max="1000">
+
+    <button type="submit">Aplicar</button>
+    <button type="button" id="fechar-modal">Fechar</button>
+  </form>
+  </div>
+</body>
+<script>
+ //   var imagem = document.getElementById('imagem');
+ //   var angulo = 0;
+ //   imagem.addEventListener('click', function() {
+ //     angulo += 90;
+ //     imagem.style.transform = 'rotate(' + angulo + 'deg)';
+ //   });
+  </script>
+	
+<script> 
+var botoesVisiveis = false; // Adicione esta linha
+var imagem = document.getElementById('imagem');
+var botoes = document.getElementById('botoes');
+var modal = document.getElementById('modal');
+var larguraInput = document.getElementById('largura');
+var alturaInput = document.getElementById('altura');
+var fecharModal = document.getElementById('fechar-modal');
+var aplicarMedidas = modal.querySelector('button[type="submit"]');
+
+var posicaoInicialX, posicaoInicialY, posicaoFinalX, posicaoFinalY;
+var margemSuperior = 50;
+var rotation = 0;
+
+var medidas = document.createElement("div");
+medidas.id = "medidas";
+imagem.parentNode.appendChild(medidas);
+
+function toggleMedidas(display) {
+    if (display) {
+        updateMedidas();
+        medidas.style.display = 'block';
+    } else {
+        medidas.style.display = 'none';
+    }
+}
+
+
+function updateMedidas() {
+    var larguraTexto = imagem.width + "cm";
+    var alturaTexto = imagem.height + "cm";
+    var larguraBotao = '<button style="background-color: lightgray; width: 30px; height: 30px;">↔</button><span> ' + larguraTexto + '</span>';
+    var alturaBotao = '<button style="background-color: lightgray; width: 30px; height: 30px;">↕</button><span> ' + alturaTexto + '</span>';
+    medidas.innerHTML = larguraBotao + "<br>" + alturaBotao;
+    medidas.style.position = "absolute";
+
+    // Distância entre a imagem e as medidas
+    var distance = 150;
+    var radians = (-rotation % 360) * (Math.PI / 180); // Mudança aqui
+
+    // Reposiciona as medidas de acordo com a rotação e distância
+    var offsetX = imagem.offsetWidth / 2 - distance * Math.cos(radians);
+    var offsetY = imagem.offsetHeight / 2 + distance * Math.sin(radians);
+
+    medidas.style.left = (imagem.offsetLeft + offsetX - medidas.offsetWidth / 2) + 'px';
+    medidas.style.top = (imagem.offsetTop + offsetY - medidas.offsetHeight / 2) + 'px';
+
+    medidas.style.transform = 'rotate(' + rotation + 'deg)';
+}
+
+
+
+
+
+imagem.addEventListener('dblclick', function() {
+    modal.style.display = 'block';
+    larguraInput.value = imagem.width;
+    alturaInput.value = imagem.height;
+});
+
+fecharModal.addEventListener('click', function() {
+    modal.style.display = 'none';
+});
+
+
+aplicarMedidas.addEventListener('click', function(e) {
+    e.preventDefault();
+    var largura = larguraInput.value;
+    var altura = alturaInput.value;
+    imagem.style.width = largura + 'px';
+    imagem.style.height = altura + 'px';
+    modal.style.display = 'none';
+    updateMedidas();
+    toggleMedidas(false);
+});
+
+
+
+
+imagem.addEventListener('dragstart', function(e) {
+    posicaoInicialX = e.clientX;
+    posicaoInicialY = e.clientY;
+    imagem.dragging = true;
+    botoes.style.display = 'none';
+});
+
+imagem.addEventListener('drag', function(e) {
+    botoes.style.left = (imagem.offsetLeft) + 'px';
+    botoes.style.top = (imagem.offsetTop - botoes.offsetHeight - margemSuperior) + 'px';
+});
+
+imagem.addEventListener('dragend', function(e) {
+    posicaoFinalX = e.clientX;
+    posicaoFinalY = e.clientY;
+    var diferencaX = posicaoFinalX - posicaoInicialX;
+    var diferencaY = posicaoFinalY - posicaoInicialY;
+    imagem.style.left = (imagem.offsetLeft + diferencaX) + 'px';
+    imagem.style.top = (imagem.offsetTop + diferencaY) + 'px';
+    botoes.style.left = (imagem.offsetLeft) + 'px';
+    botoes.style.top = (imagem.offsetTop - botoes.offsetHeight - margemSuperior) + 'px';
+    imagem.dragging = false;
+    updateMedidas();
+});
+
+
+
+
+imagem.addEventListener('click', function(e) {
+    botoesVisiveis = !botoesVisiveis; // Alterne o estado dos botões
+    botoes.style.display = botoesVisiveis ? 'block' : 'none'; // Atualize a visibilidade dos botões
+    toggleMedidas(botoesVisiveis); // Atualize a visibilidade das medidas
+    if (botoesVisiveis) { // Verifique se os botões estão visíveis
+        updateMedidas(); // Atualize as medidas apenas se os botões estiverem visíveis
+    }
+});
+
+
+botoes.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+});
+
+document.getElementById('botao_esq').addEventListener('click', function() {
+    rotation -= 90;
+    imagem.style.transform = 'rotate(' + rotation + 'deg)';
+    updateMedidas();
+});
+
+document.getElementById('botao_dir').addEventListener('click', function() {
+    rotation += 90;
+    imagem.style.transform = 'rotate(' + rotation + 'deg)';
+    updateMedidas();
+});
+
+document.getElementById('editar').addEventListener('click', function() {
+var modal = document.getElementById('modal');
+  modal.style.display = 'block';});
+
+
+
+
+botoes.style.zIndex = "0";
+</script>
+
+
+
+</body>
+</html>

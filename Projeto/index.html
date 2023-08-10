@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title> 
+</head>
+<body>
+    
+    <header>
+        <h1>Projeto Clientes</h1>
+    </header>
+    <hr>
+    <div id="teste">
+        <img src="quadrado.png" id="fixed" class="geo" alt="quadrado" draggable="false" onclick="ocultaForm('quadrado.png')">
+        <img src="triangulo.png" id="fixed" class="geo" alt="quadrado" draggable="false" onclick="ocultaForm('triangulo.png')">
+        <img src="losango.png" id="fixed" class="geo" alt="quadrado" draggable="false" onclick="ocultaForm('losango.png')">
+        <img src="circulo.png" id="fixed" class="geo" alt="quadrado" draggable="false" onclick="ocultaForm('circulo.png')">
+        <hr>
+        
+    </div>
+    <div id="formularioEdicao" style="display: none;">
+        <label for="novaLargura">Nova Largura:</label>
+        <input type="number" id="novaLargura" name="novaLargura" required><br><br>
+        
+        <label for="novaAltura">Nova Altura:</label>
+        <input type="number" id="novaAltura" name="novaAltura" required><br><br>
+        
+        <button id="aplicarEdicao">Aplicar</button>
+    </div>
+    
+  
+
+
+    <script src="addIMG.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

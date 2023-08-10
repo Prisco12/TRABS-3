@@ -1,0 +1,61 @@
+.quadrado{
+    position: absolute;
+    cursor: pointer;
+    height: 100px;
+}
+
+.geo {
+    width: 100px;
+}
+
+#formEdicao {
+    display: none;
+}
+
+#formularioEdicao {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+#formularioEdicao label, #formularioEdicao input, #formularioEdicao button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#aplicarEdicao {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.formulario-edicao {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+#aplicarEdicao {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
